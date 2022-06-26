@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace InterfaceExercise
 {
@@ -6,39 +8,26 @@ namespace InterfaceExercise
     {
         static void Main(string[] args)
         {
-            //TODO Be sure to follow BEST PRACTICES when creating classes and interfaces
+            var car1 = new Car() { TrunkWidthIn = 40, TrunkHeightIn = 35, Slogan = "If you ain't first, you're last", Logo = "Ram", NumOfTires = 4, HasWindows = true, Make = "Dodge", Model = "Avenger" };
+            var truck1 = new Truck() { BedWidthFt = 4, BedHeightFt = 1, Slogan = "If you ain't first, you're last", Logo = "Ram", NumOfTires = 6, HasWindows = true, Make = "Dodge", Model = "RAM Dually" };
+            var suv1 = new SUV() { CargoDepthFt = 3, FoldedSeatCargoDepthFt = 4, Slogan = "If you ain't first, you're last", Logo = "Ram", NumOfTires = 4, HasWindows = true, Make = "Dodge", Model = "Durango" };
 
-            //Create 2 Interfaces called IVehicle & ICompany
+            var vehicles = new List<object>();
+            vehicles.Add(car1);
+            vehicles.Add(truck1);
+            vehicles.Add(suv1);
 
-            //Create 3 classes called Car , Truck , & SUV
-
-            //In your IVehicle
-            
-                /* Create 4 members that Car, Truck, & SUV all have in common.
-                 * Example: All vehicles have a number of wheels... for now..
-                 */
-            
-
-            //In ICompany
-            
-                /*Create 2 members that are specific to each every company
-                 * regardless of vehicle type.
-                 *
-                 *
-                 * Example: public string Logo { get; set; }
-                 */
-
-            //In each of your car, truck, and suv classes
-
-                /*Create 2 members that are specific to each class
-                 * Example: truck has a bed size while car has a trunk while suv has a cargo hold size
-                 *
-                 * Then, Set each class to inherit from both IVehicle and ICompany and implement their members.
-                 * 
-                 */
-
-            //Now, create objects of your 3 classes and give their members values;
-            //Creatively display and organize their values
+            foreach (var vehicle in vehicles)
+            {
+                Console.WriteLine($"Below are the properties of our {vehicle.GetType().Name}:");
+                foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(vehicle))
+                {
+                    string name = descriptor.Name;
+                    object value = descriptor.GetValue(vehicle);
+                    Console.WriteLine("{0}={1}", name, value);
+                }
+                Console.WriteLine("----------------");
+            }
         }
     }
 }
